@@ -29,9 +29,9 @@
 
 \RequirePackage[T1]{fontenc}
 \RequirePackage[utf8]{inputenc}
-%\RequirePackage{newpxtext} % UNCOMMENT THIS FOR PALATINO FONT!
-%\RequirePackage{newpxmath} % UNCOMMENT THIS FOR PALATINO FONT!
-%\useosf % old-style figures in text, not in math
+\RequirePackage{newpxtext}
+\RequirePackage{newpxmath}
+\useosf % old-style figures in text, not in math
 \newcommand{\lowercapsss}[1]{\textls[40]{\textsc{\MakeLowercase{#1}}}}
 \newcommand{\lowercaps}[1]{\textls[70]{\textsc{\MakeLowercase{#1}}}}
 \newcommand{\uppercaps}[1]{\textls[120]{\textsc{\MakeUppercase{#1}}}}
@@ -45,18 +45,22 @@
 \RequirePackage{fancyvrb}
 
 %%
-%% Page layout
+%% Page layout -- per UW, everything needs to be within 1in of the edge of the page
 %%
 \RequirePackage[letterpaper,
       top=1in,
       bottom=1in,
-      right=3in,
+      right=2.75in,
       left=1in,
-      marginparwidth=2in, marginparsep=0.15in,asymmetric,ignoremp]{geometry}
+      includefoot,% footnote is also included in the 1in margin
+      marginparwidth=1.6in,
+      marginparsep=0.15in,
+      asymmetric,
+      ignoremp]{geometry}
 
-\settypeblocksize{*}{28pc}{2}
-\setsidecaps{0.15in}{2in}
-\setmarginnotes{0.15in}{2in}{6pt}
+% \settypeblocksize{*}{\textwidth}{2}
+\setsidecaps{0.15in}{1.6in}
+\setmarginnotes{0.15in}{1.6in}{6pt}
 \sideparmargin{right}%
 \sidecapmargin{right}
 \setsidecappos{b}
@@ -68,7 +72,7 @@
 \setlength{\floatsep}{0pt}% plus 0.0pt minus 0.0pt}
 
 % Full-size figures
-\newlength\marginextra\marginextra=2in
+\newlength\marginextra\marginextra=1.75in
 \newlength\fullwidth\fullwidth=\textwidth
 \advance\fullwidth by \marginextra
 
@@ -120,6 +124,8 @@
 \definecolor{AAblue}{RGB}{0, 23, 63}
 \definecolor{AAMITmix}{RGB}{82, 27, 58}
 
+\definecolor{UWpurple}{RGB}{50, 0, 110} % #32006e
+
 \definecolor{redc}{RGB}{230, 50, 50}
 \definecolor{bluec}{RGB}{0, 70, 150}
 \definecolor{greenc}{RGB}{50, 140, 80}
@@ -128,13 +134,13 @@
 \definecolor{brown}{HTML}{990000}
 \definecolor{bar}{HTML}{8D9965}
 
-\colorlet{chapnum}{MITred}
+\colorlet{chapnum}{UWpurple}
 \definecolor{largeornament}{gray}{0.85}
 \definecolor{smallornament}{gray}{0.65}
 
 \colorlet{title}{black}
-\colorlet{partnum}{MITred}
-\colorlet{tocchapnum}{MITred}
+\colorlet{partnum}{UWpurple}
+\colorlet{tocchapnum}{UWpurple}
 
 
 %%
@@ -183,9 +189,7 @@
 %%
 %% Fonts (2)
 %%
-% \RequirePackage[scale=1.09,textosf,mathlf,swash,roundv]{MinionPro} % COMMENT THIS FOR PALATINO
-% \RequirePackage[scale=1.00]{MyriadPro} % COMMENT THIS FOR PALATINO
-\linespread{1.11}
+\DoubleSpacing % per UW requirements, body needs to be double-spaced
 \DeclareMathAlphabet{\mathfrak}{OMS}{cmsy}{m}{n}
 \SetMathAlphabet\mathfrak{bold}{OMS}{cmsy}{b}{n}
 \let\mathscr\mathfrak
@@ -202,7 +206,7 @@
 
 % Chapter style
 \RequirePackage{titlesec}
-\makechapterstyle{mit}{%
+\makechapterstyle{uw}{%
   \renewcommand{\printchaptername}{}
   \renewcommand{\chapternamenum}{}
   \renewcommand{\printchapternum}{%
@@ -239,11 +243,11 @@
 \createmark{chapter}{left}{shownumber}{}{\hspace{0.25em} }
 \createmark{section}{right}{shownumber}{}{\hspace{0.25em} }
 
-\makepagestyle{mit}
-\makeevenfoot{mit}{\small\textcolor{black!60}{\thepage}}%
+\makepagestyle{uw}
+\makeevenfoot{uw}{\small\textcolor{black!60}{\thepage}}%
                   {}%
                   {\footnotesize\scshape\textcolor{black!60}{\lowercapsss{\rightmark}}}
-\makeoddfoot{mit}{\footnotesize\scshape\textcolor{black!60}{\lowercapsss{\leftmark}}}%
+\makeoddfoot{uw}{\footnotesize\scshape\textcolor{black!60}{\lowercapsss{\leftmark}}}%
                  {}%
                  {\small\textcolor{black!60}{\thepage}}
 
@@ -271,14 +275,12 @@
 
 \renewcommand{\cftchapterfont}{\normalsize}
 \renewcommand{\cftchapterpagefont}{\normalsize}
-\renewcommand{\cftchapterpresnum}{\hspace*{-1.5em}\color{tocchapnum}}
-\cftsetindents{chapter}{0em}{0em}
+\renewcommand{\cftchapterpresnum}{\color{tocchapnum}}
 \renewcommand{\cftchapterleader}{}
 \renewcommand{\cftchapterafterpnum}{\cftparfillskip}
 
 \renewcommand{\cftsectionfont}{\small}
 \renewcommand{\cftsectionpagefont}{\small}
-\cftsetindents{section}{0em}{2.3em}
 \renewcommand{\cftsectionleader}{}
 \renewcommand{\cftsectionafterpnum}{\cftparfillskip}
 
@@ -292,19 +294,17 @@
 }
 
 % List of Figures/Tables
-\renewcommand{\cftfigurepresnum}{\hspace*{-2.25em}\color{tocchapnum}}
+\renewcommand{\cftfigurepresnum}{\color{tocchapnum}}
 \renewcommand{\cftfigureleader}{ }
-\cftsetindents{figure}{0em}{0em}
 \renewcommand{\cftfigureafterpnum}{\cftparfillskip\vspace{4pt}}
 
-\renewcommand{\cfttablepresnum}{\hspace*{-2.25em}\color{tocchapnum}}
+\renewcommand{\cfttablepresnum}{\color{tocchapnum}}
 \renewcommand{\cfttableleader}{ }
-\cftsetindents{table}{0em}{0em}
 \renewcommand{\cfttableafterpnum}{\cftparfillskip\vspace{4pt}}
 
 % Enumeratable list
 \newenvironment{enum}{%
-  \begin{list}{\textcolor{MITred!75!black}{\arabic{enumi}.}}{%
+  \begin{list}{\textcolor{UWpurple!75!black}{\arabic{enumi}.}}{%
     \setlength{\topsep}{\onelineskip}
     \setlength{\partopsep}{0pt}
     \setlength{\parsep}{\parskip}
@@ -315,7 +315,7 @@
 
 % Itemized list
 \newenvironment{items}{%
-  \begin{list}{\textcolor{MITred!75!black}{\textbullet}}{%
+  \begin{list}{\textcolor{UWpurple!75!black}{\textbullet}}{%
     \setlength{\topsep}{0.5\onelineskip}
     \setlength{\partopsep}{0pt}
     \setlength{\parsep}{\parskip}
@@ -440,12 +440,12 @@
 \RequirePackage[symbol]{footmisc}
 \newcounter{mparcnt}
 \renewcommand\themparcnt{\fnsymbol{mparcnt}}
-\newcommand\sidenote[2][0pt]{\refstepcounter{mparcnt}\textsuperscript{\themparcnt}\marginpar{\vspace{#1}\scriptsize\linespread{1.05}\textsuperscript{\themparcnt}#2}}
+\newcommand\sidenote[2][0pt]{\refstepcounter{mparcnt}\textsuperscript{\themparcnt}\marginpar{\SingleSpacing\vspace{#1}\scriptsize\linespread{1.05}\textsuperscript{\themparcnt}#2}}
 \makeatletter
 \@addtoreset{mparcnt}{chapter}
 \makeatother
 
-\newcommand\published[2][0pt]{\marginpar{\vspace{#1}\RaggedRight\scriptsize\textcolor{gray}{#2}}}
+\newcommand\published[2][-4pt]{\marginpar{\SingleSpacing\vspace{#1}\RaggedRight\scriptsize\linespread{1.05}\textcolor{gray}{#2}}}
 
 % Sidetable (have to use marginpar since tabular doesn't work with marginnote)
 \newcommand{\sidetable}[3][]{%
@@ -540,10 +540,7 @@
 %% Citations
 %%
 
-\RequirePackage[hyperref=true,style=aiaa,giveninits=true,doi=true,isbn=true,
-                url=true,backref,backrefstyle=none,maxcitenames=1,
-                dateabbrev=false,urldate=long,labeldateparts]{biblatex}
-
+\RequirePackage[citestyle=ama, bibstyle=ama]{biblatex}
 \DeclareCiteCommand{\mciten} % only prints number and puts reference in margin
   {}
   {\printtext[bibhyperref]{\printfield{labelnumber}}%
@@ -566,7 +563,7 @@
 \newbibmacro{sidecite}{%
   \printtext[sidecite]{%
     \RaggedRight%
-    \printtext[bibhyperref]{\textcolor{MITred}{\printfield{labelnumber}.}}
+    \printtext[bibhyperref]{\textcolor{UWpurple}{\printfield{labelnumber}.}}
     \textcolor{gray}{%
     \printnames{labelname}%
     \unspace, %
@@ -715,69 +712,69 @@
 \renewcommand{\maketitle}{%
 
   \begin{titlingpage*}
-
+  \DoubleSpacing
   \begin{tikzpicture}[remember picture,overlay]
 
     \node[at=(current page.north),anchor=north,yshift=-0.75in]{\draftstring{}};
 
     % Title
-    \node[at=(current page.north west),anchor=north west,xshift=1.25in,yshift=-1.3in,text width=\wholewidth]{
-    \begin{minipage}{\wholewidth}
+    \node[at=(current page.north west),anchor=north west,xshift=1.25in,yshift=-2in,text width=\wholewidth]{
+    \begin{minipage}{\wholewidth}%
+      \centering
       {%
       {\LARGE Very long title of  \vskip5pt%
       some interesting thesis} \vspace{1pc} }\\
-      by \vspace{1pc} \\
       {\Large John Doe } \vspace{0.5pc} \\
-      \begin{tabular}{@{}lll@{}}
-      S.B. & Aeronautics and Astronautics & Massachusetts Institute of Technology (1920) \\%\vspace{0.25pc}\\
-      S.M. & Aeronautics and Astronautics & Massachusetts Institute of Technology (1980) \\
-      \end{tabular}
     \end{minipage}
     };
 
     % Fulfillments
-    \node[at=(current page.west),anchor=west,xshift=1.25in,yshift=1.2in,text width=\frontwidth]{
-    \begin{minipage}{\linewidth}
-      Submitted to the Department of Aeronautics and Astronautics\\ in partial fulfillment of the requirements for the degree of \vspace{0.5pc} \\
-      {\large Doctor of Philosophy} \vspace{0.75pc} \\
-      at the \vspace{0.75pc} \\
-      {\large Massachusetts Institute of Technology} \vspace{0.75pc} \\
-      {\large September 2025} \vspace{0.75pc}\\
-      {\textcopyright\ Massachusetts Institute of Technology 2025. All rights reserved.}
+    \node[at=(current page.west),anchor=west,xshift=1.25in,yshift=0.5in,text width=\frontwidth]{
+    \begin{minipage}{\linewidth}%
+      \centering
+      \OnehalfSpacing
+      A dissertation \\
+      submitted in partial fulfillment of the \\
+      requirements for the degree of \vspace{1.25pc} \\
+      {\large Doctor of Philosophy} \vspace{1.25pc} \\
+      {\large University of Washington} \\
+      {\large 2025}
     \end{minipage}
     };
 
     % Signatures
-    \node[at=(current page.south west),anchor=south west,xshift=1.25in,yshift=1in,text width=\frontwidth]{%
-    \begin{minipage}{\linewidth}
-      \textsl{Author} \\
-      John Doe  \hfill \rule{0.3\textwidth}{.2pt} \\
-      Department of Aeronautics and Astronautics \\
-      August 23, 2025 \vspace{0.6pc}\\
-      \textsl{Certified by} \\
-      Professor 1 \hfill \rule{0.3\textwidth}{.2pt}\\
-      Professor of Aeronautics and Astronautics \\
-      Thesis Supervisor \vspace{0.6pc}\\
-      \textsl{Certified by} \\
-      Professor 2 \hfill \rule{0.3\textwidth}{.2pt} \\
-      Associate Professor of Aeronautics and Astronautics \\
-      Thesis Supervisor \vspace{0.6pc}\\
-      \textsl{Certified by} \\
-      Professor 3 \hfill \rule{0.3\textwidth}{.2pt}\\
-      Professor of Aeronautics and Astronautics \\
-      Thesis Committee Member \vspace{0.6pc}\\
-      \textsl{Accepted by} \\
-      Professor 4  \hfill \rule{0.3\textwidth}{.2pt} \\
-      Associate Professor of Aeronautics and Astronautics \\
-      Chair, Graduate Program Committee%\\
+    \node[at=(current page.south west),anchor=south west,xshift=1.25in,yshift=2in,text width=\frontwidth]{%
+    \begin{minipage}{\linewidth}%
+      \centering
+      \DoubleSpacing
+      Reading Committee: \vspace{0.5pc}\\
+      Professor 1, Chair\\
+      Professor 2\\
+      Professor 3 \vspace{2pc}\\
+
+      Program Authorized to Offer Degree:\\
+      Health Services
     \end{minipage}%
     };
 
   \end{tikzpicture}
 
+ % Copyright
+ \newpage%
+ \thispagestyle{empty}%
+ \begin{tikzpicture}[remember picture,overlay]
+
+    \node[at=(current page.north),anchor=north,yshift=-1in,text width=0.5\paperwidth,align=center]{
+        \begin{minipage}{\linewidth}
+              \centering
+              \copyright\ Copyright 2025\\
+              John Doe
+        \end{minipage}};
+ \end{tikzpicture}
+
  \cleardoublepage
 
-  \end{titlingpage*}
+ \end{titlingpage*}
 }
 
 \newcommand{\printabstract}[1]%
@@ -786,42 +783,22 @@
   \thispagestyle{plain}%
   \addcontentsline{toc}{chapter}{Abstract}
   \noindent%
-      {\RaggedRight%
-      \null\vspace{3pc}
+      {%
+      \centering%
+      University of Washington\\
+      \null\vspace{0.5pc}
 
-      {\Large{\color{title}Very long title} \textit{of} }  \vspace{0.75pc}\\
+      {\large \noindent \textbf{\lowercaps{Abstract}}} \vspace{1.0pc} \\
 
-      %{\Large\textit{and}} \vspace{0.75pc} \\
-
-      {\Large{\color{title} some} \textit{very} } \vspace{0.75pc} \\
-
-      %{\Large} \vspace{0.75pc} \\
-
-      {\Large\color{title} interesting thesis} \vspace{1pc} \\
-
-      \noindent by \vspace{1pc} \\
+      {\Large{\color{title}Very long title} \textit{of} {\color{title} some} \textit{very} \color{title} interesting thesis} \vspace{1pc} \\
 
       {\large John Doe}\vspace{1pc} \\
 
-      Submitted to the Department of \\
-      Aeronautics and Astronautics on \mbox{August 23, 2025,} \\
-      in Partial Fulfillment of the Requirements for the Degree of \\
-      Doctor of Philosophy in Aerospace Computational Engineering\\
-      }%
-      \vspace{1.5pc}
-      %
-      {\large \noindent \lowercaps{Abstract}} \vspace{0.25pc} \\
-      %
-      {\noindent \input{#1}}
-      \vspace{1pc}
-
-      \noindent\textsl{Thesis Supervisor:}\\
+      Chair of the Supervisory Committee:\\
       Professor 1 \\
-      Professor of Aeronautics and Astronautics \vspace{0.5pc} \\
-      \noindent\textsl{Thesis Supervisor:}\\
-      Professor 2 \\
-      Associate Professor of Aeronautics and Astronautics
+      Department of Health Systems and Population Health \vspace{2pc} \\
+      }
 
-  %\end{minipage}
+      {\noindent \input{#1}}
   \clearpage%
 }

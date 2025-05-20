@@ -3,7 +3,7 @@
             %    draft,
             %    draftversion, % prints draft on front page
                twoside,
-               letterpaper,openright]{mitthesis}
+               letterpaper,openright]{uwthesis}
 
 \hypersetup{
   pdfinfo={
@@ -21,8 +21,8 @@
 \addbibresource{bibliography.bib}
 
 \begin{document}
-  \chapterstyle{mit}
-  \pagestyle{mit}
+  \chapterstyle{uw}
+  \pagestyle{uw}
   \maxsecnumdepth{subsection}
 
     \mainmatter
@@ -43,11 +43,12 @@
 
       \cleardoublepage%
       \pdfbookmark{\contentsname}{toc}%
-      \tableofcontents*
+      {\SingleSpacing\tableofcontents*}
 
       \cleardoublepage
 
       {\phantomsection%
+      \SingleSpacing%
       \input{nomenclature.tex}%
       \addcontentsline{toc}{chapter}{Nomenclature}%
       \printnomenclature[0.8in]%
@@ -56,11 +57,12 @@
       \cleardoublepage
 
       {\phantomsection%
+      \SingleSpacing%
       \printglossary[title=Acronyms,type=\acronymtype]}
 
       \cleardoublepage
 
-      {\RaggedRight\listoffigures\cleardoublepage
+      {\RaggedRight\SingleSpacing\listoffigures\cleardoublepage
       \listoftables}
 
       \include{chapters/1_intro}
@@ -71,7 +73,7 @@
 
       \include{chapters/4_conclusion}
 
-      \printbibliography
+      {\SingleSpacing\printbibliography}
 
       \addcontentsline{toc}{part}{\appendixtocname}
       \appendixpage*
@@ -82,7 +84,7 @@
       \appendix
       \include{appendices/app}
 
-      {\small\printindex}
+      {\SingleSpacing\small\printindex}
 
       \newpage  \clearpage \mbox{}
       \input{colophon.tex}
@@ -93,13 +95,14 @@
         \begin{tikzpicture}[remember picture,overlay]
         \node[at=(current page.south),gray,anchor=south,yshift=1in,text width=0.5\paperwidth,align=center]{
             \footnotesize%
+            \SingleSpacing%
             \begin{minipage}{\linewidth}
                   \centering
                   Ph.D. Dissertation\\
                   John Doe\vskip0.5em
                   \textit{Some very long title}\\
                   \textit{about some interesting topic}\vskip0.5em
-                  -- \textsc{mmxviii} --
+                  -- \textsc{mmxxv} --
             \end{minipage}};
         \end{tikzpicture}
       }

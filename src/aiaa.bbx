@@ -45,7 +45,7 @@
     %   \setlength{\biblabelsep}{5 pt}%
     % }
     {%
-      \DeclareFieldFormat{labelnumberwidth}{\textcolor{MITred}{##1}}%
+      \DeclareFieldFormat{labelnumberwidth}{\textcolor{UWpurple}{##1}}%
       \setlength{\biblabelsep}{3pt}%
     }
     {%
@@ -57,17 +57,20 @@
 % Alter settings that carry through from biblatex
 \ExecuteBibliographyOptions
   {
+    hyperref     = true       ,
     articletitle = true       ,
     chaptertitle = true       ,
     biblabel     = brackets   ,
-    doi          = false      ,
+    doi          = true       ,
     eprint       = false      ,
-    isbn         = false      ,
+    isbn         = true       ,
     maxnames     = 999        ,
-    maxcitenames = 999        ,
+    maxcitenames = 1          ,
     pageranges   = true       ,
     dateabbrev   = false      ,
-    url          = true
+    url          = true       ,
+    urldate      = long       ,
+    labeldateparts,
   }
 
 \uspunctuation

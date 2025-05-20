@@ -1,0 +1,239 @@
+% from https://github.com/dli-stats/biblatex-ama/tree/main
+
+\ProvidesFile{ama.bbx}[2021/07/09 v0.1 biblatex bibliography style]
+
+\RequireBibliographyStyle{numeric}
+% START edit by @mopg
+\ExecuteBibliographyOptions
+  {
+    autocite=superscript,
+    autopunct=false,
+    sorting=none,
+    hyperref=true,
+    sorting=none,
+    maxbibnames=6,
+    minbibnames=3,
+    doi=true,
+    isbn=true,
+    url=true,
+    uniquename=false,
+    uniquelist=false,
+    giveninits=true,
+    terseinits=true,
+    backref,
+    backrefstyle=none,
+    maxcitenames=1,
+    dateabbrev=false,
+    urldate=long,
+    labeldateparts
+  }
+% END edit by @mopg
+
+% START edit by @mopg
+\DeclareFieldFormat[article,techreport,inbook,incollection,inproceedings,patent,thesis,unpublished]{title}{\usebibmacro{string+doiurlisbn}{#1\isdot}}
+\DeclareFieldFormat[book]{title}{\usebibmacro{string+doiurlisbn}{\mkbibemph{#1\isdot}}}
+% END edit by @mopg
+\renewbibmacro{in:}{}
+\DeclareFieldFormat{pages}{#1}
+\renewcommand*{\bibpagespunct}{\addcolon}
+
+\renewbibmacro*{journal+issuetitle}{%
+    \usebibmacro{journal}%
+    \setunit*{\addperiod\addspace}%
+    \iffieldundef{series}
+    {}
+    {\newunit
+        \printfield{series}%
+        \setunit{\addspace}}%
+    \usebibmacro{issue+date}%
+    \setunit{\addsemicolon\addspace}%
+    \printfield{volume}%
+    (\printfield{number})%
+    \setunit{\addcolon\space}%
+    \usebibmacro{issue}%
+    \newunit%
+}
+
+% Print only the year
+\renewbibmacro*{issue+date}{%
+    \printfield{year}%
+}
+
+% Remove "and" from list of authors
+\renewcommand*{\finalnamedelim}{\multinamedelim}
+
+% Bib list with num-dot format
+\DeclareFieldFormat{labelnumberwidth}{#1\adddot}
+\DeclareFieldFormat{shorthandwidth}{\mkbibparens{#1}}
+
+% Make author names Title Case
+\def\FirstLetterUppercase#1{\expandafter\FirstLetterUppercase@i#1 \@nil}
+\def\FirstLetterUppercase@i#1#2 #3\@nil{%
+  \MakeUppercase{#1}\MakeLowercase{#2}
+  \ifx\relax#3\relax\def\next@i{}\else\def\next@i{\expandafter\FirstLetterUppercase@i#3\@nil}\fi%
+  \next@i}
+
+\InitializeBibliographyStyle{\renewcommand*{\mkbibnamefamily}[1]{\FirstLetterUppercase{#1}}}
+
+% START edit by @mopg
+
+\renewbibmacro*{begentry}{%
+    \usebibmacro{entrypageref}%
+}
+
+% No period after doi, ibsn, or url
+\renewcommand*{\finentrypunct}{%
+      \ifboolexpr{(togl {bbx:doi} and not test {\iffieldundef{doi}}) or
+                  (togl {bbx:isbn} and not test {\iffieldundef{isbn}})% or
+                  %(togl {bbx:url} and not test {\iffieldundef{url}} and test {\ifentrytype{online}})%
+                  }%
+        {}%
+        {\addperiod}%
+      }
+
+% Put "cited on" in margin
+\DeclareFieldFormat{pagerefformat}{{\footnotesize\color{gray}#1}}
+%\DeclareFieldFormat{pagerefformat}{\mkbibparens{{\color{red}\mkbibemph{#1}}}}
+\newbibmacro*{entrypageref}{%
+  \iflistundef{pageref}
+    {}
+    {\marginnote{%\footnotesize%\color{gray}%{%
+      \printtext[pagerefformat]{%
+         \ifnumgreater{\value{pageref}}{1}%
+           {\bibstring{backrefpages}\ppspace}%
+           {\bibstring{backrefpage}\ppspace}%
+         \printlist[pageref][-\value{listtotal}]{pageref}%
+         }%
+       }}%
+}
+\renewbibmacro*{pageref}{} % default is empty now
+
+\renewbibmacro*{doi+eprint+url}{%
+    \setunit{\adddot\addspace}%
+    \iftoggle{bbx:doi}
+        {%
+        \iffieldundef{doi}%
+            {}%
+            {\ifboolexpr{(togl {bbx:isbn} and not test {\iffieldundef{isbn}})}{}{\addperiod}\\\printfield{doi}}%
+        }%
+        {}%
+    \setunit{\adddot\addspace}%
+    \iftoggle{bbx:eprint}
+        {\usebibmacro{eprint}}
+        {}%
+    \setunit{\adddot\addspace}%
+    % \iftoggle{bbx:url} % do not print random urls, online for online
+    %  {%
+    %    \iffieldundef{url}%
+    %      {}%
+    %      {\addperiod\\\printfield{url} (Accessed: \printfield{urldate})}%
+    %    }%
+    %  {}%
+    %     {\usebibmacro{url+urldate}}
+    %     {}%
+}
+
+\renewbibmacro*{url+urldate}{%
+    \iftoggle{bbx:url}
+    {%
+        \iffieldundef{url}%
+        {}%
+        {\addperiod\\\printfield{url} \usebibmacro{urldate}}%
+        }%
+    {}%
+}
+
+\renewbibmacro*{isbn}{%
+    \setunit{\adddot\addspace}%
+    \iftoggle{bbx:isbn}
+    {%
+    \iffieldundef{isbn}%
+        {}%
+        %{\addperiod\\\printfield{isbn}}%
+        {\addperiod\\\href{http://books.google.com/books?vid=ISBN\thefield{isbn}}{\printfield{isbn}}}%
+    }%
+    {}%
+}
+
+\DefineBibliographyStrings{english}{%
+    backrefpage  = {cited on p.}, % for single page number
+    backrefpages = {cited on pp.} % for multiple page numbers
+}
+
+% to have everything in italics in the sidenote
+\DeclareFieldFormat[article,inbook,incollection,book,
+     inproceedings,patent,thesis,unpublished,suppbook,
+     suppcollection,suppperiodical]{citetitle}{\mkbibemph{#1}}
+
+% links to doi, isbn, or url, in title
+\newbibmacro*{string+doiurlisbn}[1]{%
+  \iffieldundef{doi}{%
+    \iffieldundef{isbn}{%
+      \iffieldundef{url}{%
+        \ifentrytype{patent}{%
+          \href{https://patents.google.com/patent/US\thefield{number}/en}{#1}%
+        }{%
+          #1%
+        }%
+      }{% if only url is available
+        \href{https://\thefield{url}}{#1}%
+      }%
+    }{% if only url or isbn is available
+      \href{https://books.google.com/books?vid=ISBN\thefield{isbn}}{#1}%
+    }%
+  }%
+  {%
+    \href{https://dx.doi.org/\thefield{doi}}{#1}%
+  }%
+}
+
+% book isbn did not show up properly -- so adding the full declaration here (this is copied from standard.bbx)
+\DeclareBibliographyDriver{book}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/editor+others/translator+others}%
+  \setunit{\printdelim{nametitledelim}}\newblock
+  \usebibmacro{maintitle+title}%
+  \newunit
+  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}%
+  \newunit\newblock
+  \usebibmacro{byeditor+others}%
+  \newunit\newblock
+  \printfield{edition}%
+  \newunit
+  \iffieldundef{maintitle}
+    {\printfield{volume}%
+     \printfield{part}}
+    {}%
+  \newunit
+  \printfield{volumes}%
+  \newunit\newblock
+  \usebibmacro{series+number}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{publisher+location+date}%
+  \newunit\newblock
+  \usebibmacro{chapter+pages}%
+  \newunit
+  \printfield{pagetotal}%
+  \newunit\newblock%
+%   \iftoggle{bbx:isbn} % these lines were commented by @mopg
+%     {\printfield{isbn}}
+%     {}%
+  \usebibmacro{isbn}% this line was added by @mopg
+  \newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+% END edit by @mopg

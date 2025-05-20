@@ -5,6 +5,7 @@ default:
 	pdflatex $(MAIN).tex
 
 all:
+	cd figures && make
 	pdflatex $(MAIN).tex
 	biber $(MAIN)
 	makeglossaries $(MAIN)
@@ -12,6 +13,9 @@ all:
 	makeindex $(MAIN).idx
 	pdflatex $(MAIN).tex
 	pdflatex $(MAIN).tex
+
+figures:
+	cd figures && make
 
 clean:
 	mv $(MAIN).tex temp.tex

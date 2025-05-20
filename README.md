@@ -1,7 +1,12 @@
-# MIT PhD thesis template
+# University of Washington (UW) PhD thesis template
 
-This template is used to make [this thesis](https://dspace.mit.edu/handle/1721.1/120380).
+This template is based on [MIT's PhD thesis template](https://github.com/mopg/phdthesis-template) that was used to make [this thesis](https://dspace.mit.edu/handle/1721.1/120380).
 It has also been as the basis for the book [Engineering Design Optimization](https://mdobook.github.io) by Joaquim R. R. A. Martins and Andrew Ning.
+
+## Reference for Thesis Requirements
+
+[This webpage](https://grad.uw.edu/current-students/enrollment-through-graduation/thesis-dissertation/) was used for all the formatting guidelines for this thesis template, including the [ProQuest formatting guidelines](https://grad.uw.edu/wp-content/uploads/2019/06/Preparing-Your-Manuscript-for-Submission-Revised-31jul2015.pdf).
+To the best of my knowledge, this template meets all the requirements for the UW PhD thesis, but this has not been verified UW.
 
 ## Usage
 
@@ -11,7 +16,7 @@ Use the provided [`Makefile`](src/Makefile) to compile the text and the separate
 
 If you want to use Minion Pro and Myriad Pro fonts in your thesis (which is what I used),
 you'll need to compile those on your machine using [FontPro](https://github.com/sebschub/FontPro)
-and then uncomment lines 186-187 in [`mitthesis.cls`](src/mitthesis)
+and then uncomment lines 186-187 in [`uwthesis.cls`](src/uwthesis)
 and lines 11-12 in [`preamble_figures.tex`](src/figures/preamble_figures.tex).
 Lastly, you should also update the text in the colophon (if you choose to use it).
 
@@ -20,5 +25,5 @@ Lastly, you should also update the text in the colophon (if you choose to use it
 To customize it for your case, make sure to update your name and title in the following places:
 
 - PDF metadata in [`thesis.tex`](src/thesis.tex)
-- Title page, abstract in [`mitthesis.cls`](src/mitthesis.cls) (as well as adding your committee's info, bio info, etc.)
+- Title page, abstract in [`uwthesis.cls`](src/uwthesis.cls) (as well as adding your committee's info, bio info, etc.)
 - Title and name on last page of doc in [`thesis.tex`](src/thesis.tex)

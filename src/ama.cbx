@@ -1,0 +1,18 @@
+% from https://github.com/dli-stats/biblatex-ama/tree/main
+
+\ProvidesFile{ama.cbx}[2021/07/09 v0.1 biblatex bibliography style]
+
+% START edit by @mopg
+\RequireCitationStyle{numeric-comp}
+% END edit by @mopg
+
+% First after last name
+\DeclareNameAlias{default}{family-given}
+
+% No punctuation inside names
+\renewcommand*{\revsdnamepunct}{}
+
+% Cite with round parenthesis
+% \DeclareOuterCiteDelims{parencite}{\bibopenparen}{\bibcloseparen}
+% \DeclareOuterCiteDelimsAlias{cite}{parencite}
+% \DeclareInnerCiteDelims{textcite}{\bibopenparen}{\bibcloseparen}
