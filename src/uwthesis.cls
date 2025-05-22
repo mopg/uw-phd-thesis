@@ -29,9 +29,6 @@
 
 \RequirePackage[T1]{fontenc}
 \RequirePackage[utf8]{inputenc}
-\RequirePackage{newpxtext}
-\RequirePackage{newpxmath}
-\useosf % old-style figures in text, not in math
 \newcommand{\lowercapsss}[1]{\textls[40]{\textsc{\MakeLowercase{#1}}}}
 \newcommand{\lowercaps}[1]{\textls[70]{\textsc{\MakeLowercase{#1}}}}
 \newcommand{\uppercaps}[1]{\textls[120]{\textsc{\MakeUppercase{#1}}}}
@@ -189,6 +186,9 @@
 %%
 %% Fonts (2)
 %%
+\RequirePackage{newpxtext} % Palatino -- load after amssymb
+\RequirePackage{newpxmath}
+\useosf % old-style figures in text, not in math
 \DoubleSpacing % per UW requirements, body needs to be double-spaced
 \DeclareMathAlphabet{\mathfrak}{OMS}{cmsy}{m}{n}
 \SetMathAlphabet\mathfrak{bold}{OMS}{cmsy}{b}{n}
